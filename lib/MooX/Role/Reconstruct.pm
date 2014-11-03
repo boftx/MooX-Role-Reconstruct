@@ -30,9 +30,9 @@ sub import {
             for ( keys( %{ $con->{attribute_specs} } ) ) {
                 $spec{$_} = { %{ $con->{attribute_specs}{$_} } };
             }
-            foreach my $attr ( grep exists( $spec{$_}{init_arg} ), keys(%spec) )
+            for ( grep exists( $spec{$_}{init_arg} ), keys(%spec) )
             {
-                delete($spec{$attr}{init_arg}) unless $spec{$attr}{keep_init};
+                delete($spec{$_}{init_arg}) unless $spec{$_}{keep_init};
             }
             unquote_sub $con->generate_method(
                 $target, $method, \%spec, { no_install => 1 }
