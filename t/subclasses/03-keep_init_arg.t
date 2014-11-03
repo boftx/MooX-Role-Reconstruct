@@ -11,9 +11,9 @@ has foo => (
 );
 
 has baz => (
-    is => 'ro',
+    is        => 'ro',
     default   => 'baz',
-    init_arg => 'bar',
+    init_arg  => 'bar',
     keep_init => 1,
 );
 
@@ -24,9 +24,9 @@ extends qw( MyTest );
 with qw( MooX::Role::Reconstruct );
 
 has fog => (
-    is       => 'ro',
-    default  => 'fog',
-    init_arg => undef,
+    is        => 'ro',
+    default   => 'fog',
+    init_arg  => undef,
     keep_init => 1,
 );
 
@@ -37,7 +37,8 @@ use Test::Exception;
 
 use_ok('MyTest::Subclass');
 
-my $to1 = new_ok( 'MyTest::Subclass' => [ foo => 'bar', bar => 'bar' ], '$to1' );
+my $to1 =
+  new_ok( 'MyTest::Subclass' => [ foo => 'bar', bar => 'bar' ], '$to1' );
 is( $to1->foo, 'foo', 'foo value set to default in constructor' );
 is( $to1->baz, 'bar', 'baz value set by bar in constructor' );
 is( $to1->fog, 'fog', 'fog value set to default in constructor' );

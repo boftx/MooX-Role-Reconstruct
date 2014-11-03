@@ -11,9 +11,9 @@ has foo => (
 );
 
 has baz => (
-    is => 'ro',
+    is        => 'ro',
     default   => 'baz',
-    init_arg => 'bar',
+    init_arg  => 'bar',
     keep_init => 1,
 );
 

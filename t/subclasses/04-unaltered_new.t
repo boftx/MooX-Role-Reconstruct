@@ -32,7 +32,8 @@ my $to2 = MyTest::Subclass->reconstruct( foo => 'baz', fog => 'baz' );
 is( $to2->foo, 'baz', 'value set from reconstructor' );
 is( $to2->fog, 'baz', 'value set from reconstructor' );
 
-my $to1 = new_ok( 'MyTest::Subclass' => [ foo => 'baz', fog => 'baz' ], '$to1' );
+my $to1 =
+  new_ok( 'MyTest::Subclass' => [ foo => 'baz', fog => 'baz' ], '$to1' );
 is( $to1->foo, 'foo', 'default value set in constructor' );
 is( $to1->fog, 'fog', 'default value set in constructor' );
 
