@@ -9,34 +9,36 @@ our $VERSION = 'v0.1_1';
 
 use Sub::Quote;
 use Sub::Defer;
-use Moo::Role;
+use Role::Tiny;
 
 sub import {
-    my $target  = shift;
-    my %args = @_ ? ( @_ ) : ( method => 'reconstruct' );
+    my $target = shift;
+    my %args = @_ ? (@_) : ( method => 'reconstruct' );
 
     my $method = delete( $args{method} );
 
     die 'MooX::Role::Reconstruct can only be used on Moo classes.'
       unless $Moo::MAKERS{$target} && $Moo::MAKERS{$target}{is_class};
- 
+
     my $con = Moo->_constructor_maker_for($target);
 
-    Moo::_install_tracked( $target, $method,
-    defer_sub( "${target}::${method}" => sub {
-        # don't alter the original specs if called before new
-        my %spec;
-        for ( keys( %{$con->{attribute_specs}} ) ) {
-            $spec{$_} = { %{$con->{attribute_specs}{$_}} };
-        }
-        foreach my $attr ( grep exists( $spec{$_}{init_arg} ), keys(%spec) ) {
-            delete( $spec{$attr}{init_arg} ) unless $spec{$attr}{keep_init};
-        }
+    defer_sub(
+        "${target}::${method}" => sub {
 
-        unquote_sub $con->generate_method(
-            $target, $method, \%spec, { no_install => 1 }
-        )
-    }));
+            # don't alter the original specs if called before new
+            my %spec;
+            for ( keys( %{ $con->{attribute_specs} } ) ) {
+                $spec{$_} = { %{ $con->{attribute_specs}{$_} } };
+            }
+            foreach my $attr ( grep exists( $spec{$_}{init_arg} ), keys(%spec) )
+            {
+                delete($spec{$attr}{init_arg}) unless $spec{$attr}{keep_init};
+            }
+            unquote_sub $con->generate_method(
+                $target, $method, \%spec, { no_install => 1 }
+            );
+        }
+    );
 
     return;
 }
@@ -52,9 +54,29 @@ MooX::Role::Reconstruct - Reconstruct Moo Objects
 =head1 SYNOPSIS
 
   
- # use default method name: reconstruct
+ # in a module
+ package MyModule;
+
  use Moo;
  with qw( MooX::Role::Reconstruct );
+  
+ has row_id => (
+    is => 'ro',
+    init_arg => undef,
+ );
+  
+ has foo => (
+    is => 'rw',
+ );
+  
+ 1;
+  
+ # and in a script
+
+ my $row_ref = $sth->fetchrow_hashref();
+  
+ # create a new object bypassing any init_arg restrictions
+ my $obj = MyModule->reconstruct( $row_ref );
   
 
 =head1 DESCRIPTION
@@ -78,26 +100,37 @@ attribute as shown below:
  );
   
 
-This presumes that one has written sensible C<coerce> and C<isa> conditions.
+In this case, the noraml behavior of taking the initializer value from
+C<baz> if it is present will be retained.
 
-=head1 METHODS INSTALLED
+C<BUILDARGS> and C<BUILD> will be called as they would be if C<class->new>
+had been used, as will any C<coerce> and/or C<isa> specifiers. (This presumes
+that one has written sensible C<coerce> and C<isa> conditions.)
+
+=head1 METHODS
 
 =head2 reconstruct
 
-The module installs a method named C<reconstruct> by default. This can be
-changed by supplying the C<method> option as shown in the synopsis.
+The module installs a method named C<reconstruct> by default.
 
 Note: Any naming conflicts will show up as a C<Subroutine redefined> error.
 
 =head1 ERROR CONDITIONS
 
-This module require that L<Moo> be loaded prior to use. The module will
+This Role requires that L<Moo> be loaded prior to use. The module will
 C<die> otherwise.
 
-Passing in the name of a method that already exists in your code as the
-name of the reconstructor will result in a C<Subroutine redfined> error.
+=head1 SUPPORT
+
+Please report any bugs or feature requests through the issue tracker at
+L<https://github.com/boftx/MooX-Role-Reconstruct/issues>. You will be
+notified automatically of any progress on your issue.
+
+GitHub: L<https://github.com/boftx/MooX-Role-Reconstruct>
 
 =head1 SEE ALSO
+
+This module is based on the ideas in L<MooseX::UnsafeConstructable>.
 
 =head1 AUTHOR
 
