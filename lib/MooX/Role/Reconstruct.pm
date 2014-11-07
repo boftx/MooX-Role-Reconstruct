@@ -83,12 +83,12 @@ MooX::Role::Reconstruct - Reconstruct Moo Objects
 
 It is often desirable to create an object from a database row or a decoded
 JSON object. However, it is quite likely that you might have declared some
-attributes with C<init_arg => undef> so simply calling
+attributes with C<< init_arg => undef >> so simply calling
 C<<class->new( %hash )>> will fail.
 
 This module makes it possible by providing a constructor that will ignore
 all C<init_arg> directives. This behavior can be disabled on a case-by-case
-basis by specifying C<keep_init => 1> in the C<has> structure for a given
+basis by specifying C<< keep_init => 1 >> in the C<has> structure for a given
 attribute as shown below:
 
   
@@ -103,7 +103,7 @@ attribute as shown below:
 In this case, the noraml behavior of taking the initializer value from
 C<baz> if it is present will be retained.
 
-C<BUILDARGS> and C<BUILD> will be called as they would be if C<class->new>
+C<BUILDARGS> and C<BUILD> will be called as they would be if C<< class->new >>
 had been used, as will any C<coerce> and/or C<isa> specifiers. (This presumes
 that one has written sensible C<coerce> and C<isa> conditions.)
 
