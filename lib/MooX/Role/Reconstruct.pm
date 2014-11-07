@@ -84,7 +84,7 @@ MooX::Role::Reconstruct - Reconstruct Moo Objects
 It is often desirable to create an object from a database row or a decoded
 JSON object. However, it is quite likely that you might have declared some
 attributes with C<< init_arg => undef >> so simply calling
-C<<class->new( %hash )>> will fail.
+C<< class->new( %hash ) >> will fail.
 
 This module makes it possible by providing a constructor that will ignore
 all C<init_arg> directives. This behavior can be disabled on a case-by-case
