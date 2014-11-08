@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 use 5.006;
 
-our $VERSION = 'v0.1_1';
+our $VERSION = 'v0.1.1';
 
 use Sub::Quote;
 use Sub::Defer;
