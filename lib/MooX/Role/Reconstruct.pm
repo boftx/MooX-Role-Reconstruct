@@ -5,7 +5,7 @@ use warnings FATAL => 'all';
 
 use 5.006;
 
-our $VERSION = 'v0.1.1';
+our $VERSION = 'v0.1.2';
 
 use Sub::Quote;
 use Sub::Defer;
@@ -127,6 +127,10 @@ L<https://github.com/boftx/MooX-Role-Reconstruct/issues>. You will be
 notified automatically of any progress on your issue.
 
 GitHub: L<https://github.com/boftx/MooX-Role-Reconstruct>
+
+=head1 DEPENDENCIES
+
+L<Sub::Quote>, L<Sub::Defer>, L<Role::Tiny>
 
 =head1 SEE ALSO
 
