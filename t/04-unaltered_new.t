@@ -12,7 +12,6 @@ has foo => (
 package main;
 
 use Test::More;
-use Test::Exception;
 
 use_ok('MyTest');
 
