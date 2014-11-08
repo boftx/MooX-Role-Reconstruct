@@ -130,7 +130,7 @@ GitHub: L<https://github.com/boftx/MooX-Role-Reconstruct>
 
 =head1 SEE ALSO
 
-This module is based on the ideas in L<MooseX::UnsafeConstructable>.
+This module is based on ideas in L<MooseX::UnsafeConstructable>.
 
 =head1 AUTHOR
 
@@ -138,7 +138,7 @@ Jim Bacon E<lt>jim@nortx.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2014 by Jim Bacon
+Copyright (C) 2014, Jim Bacon
 
 This library is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself, either Perl version 5.16 or,
